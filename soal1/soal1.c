@@ -18,14 +18,10 @@ pid_t pid, sid;        // Variabel untuk menyimpan PID
 
     pid = fork();     // Menyimpan PID dari Child Process
 
-    /* Keluar saat fork gagal
-    * (nilai variabel pid < 0) */
     if (pid < 0) {
         exit(EXIT_FAILURE);
     }
 
-    /* Keluar saat fork berhasil
-    * (nilai variabel pid adalah PID dari child process) */
     if (pid > 0) {
         exit(EXIT_SUCCESS);
     }
@@ -62,7 +58,7 @@ pid_t pid, sid;        // Variabel untuk menyimpan PID
             char *zip[3] = {"Foto_for_Stevany.zip", "Musik_for_Stevany.zip", "Film_for_Stevany.zip"};
             char *tzip[3] = {"/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Foto_for_Stevany.zip", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Musik_for_Stevany.zip", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Film_for_Stevany.zip"};
             char *tfolder[3] = {"/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Pyoto", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Musyik", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Fylm"}; 
-            int flag =0;
+            int flag = 0;
             
             if(flag==0){
                 //mkdir
@@ -121,7 +117,7 @@ pid_t pid, sid;        // Variabel untuk menyimpan PID
             execv("/usr/bin/zip", argv2);
             entered2 = 1;
         }
-        sleep(2);
+        sleep(3);
     }
     
 }
