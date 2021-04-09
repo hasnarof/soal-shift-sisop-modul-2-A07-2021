@@ -55,61 +55,65 @@ pid_t pid, sid;        // Variabel untuk menyimpan PID
         int entered2 = 0;
         struct tm tmp = *localtime(&currTime);
 
-        if(tmp.tm_mday == day && tmp.tm_mon+1 == month && tmp.tm_hour == hour-6 && tmp.tm_min == min && entered == 0){   
+        if(tmp.tm_mday == day && tmp.tm_mon+1 == month && tmp.tm_hour == (hour-6) && tmp.tm_min == min && entered == 0){   
 
             char *folder[3] = {"Pyoto", "Musyik", "Fylm"};
             char *link[3] = {"https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download", "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download"};
             char *zip[3] = {"Foto_for_Stevany.zip", "Musik_for_Stevany.zip", "Film_for_Stevany.zip"};
-            char *tzip[3] = {"/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Pyoto.zip", "//home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Musyik.zip", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Fylm.zip"};
+            char *tzip[3] = {"/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Foto_for_Stevany.zip", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Musik_for_Stevany.zip", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Film_for_Stevany.zip"};
             char *tfolder[3] = {"/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Pyoto", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Musyik", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Fylm"}; 
-
-            //mkdir
-            pid_t child_id, wpid;
-            int j;
-
-            int status1=0;
-            for(j=0; j<3; j++){
-                
-                if((child_id=fork())==0){
-                    char *argv[] = {"mkdir", folder[j], NULL};
-                    execv("/usr/bin/mkdir", argv);
-                    exit(0);
+            int flag =0;
+            
+            if(flag==0){
+                //mkdir
+                pid_t child_id, wpid;
+                int j;
+                for(j=0; j<3; j++){
+                    
+                    if((child_id=fork())==0){
+                        char *argv[] = {"mkdir", folder[j], NULL};
+                        execv("/usr/bin/mkdir", argv);
+                    }
                 }
-            }
-
-            while((wpid==wait(&status1))>0);
-
-            pid_t child_id2, wpid2;
-            int k;
-            int status2=0;
-            for(k=0; k<3; k++){
-                
-                if((child_id2=fork())==0){
-                    char *argv[] = {"wget", "-U", "firefox", "-q", "--no-check-certificate", link[k], "-O", zip[k], NULL};
-                    execv("/usr/bin/wget", argv);
-                    exit(0);
+                for(j=0; j<3; j++){
+                    waitpid(-1, NULL, 0);
                 }
-                
+
+                //wget
+                pid_t child_id2, wpid2;
+                int k;
+                for(k=0; k<3; k++){
+                    
+                    if((child_id2=fork())==0){
+                        char *argv[] = {"wget", "-U", "firefox", "-q", "--no-check-certificate", link[k], "-O", zip[k], NULL};
+                        execv("/usr/bin/wget", argv);
+                    }
+                    
+                }
+                for(k=0; k<3; k++){
+                    waitpid(-1, NULL, 0);
+                }
+                flag=1;
             }
-            while((wpid2==wait(&status2))>0);
 
             //unzip
-            pid_t child_id3, wpid3;
-            int i;
-            int status3=0;
-            for(i=0; i<3; i++){
+            if(flag==1){
+                pid_t child_id3;
+                int i;
                 
-                if((child_id3=fork())==0){
-                    char *argv2[] = {"unzip", "-j", tzip[i], "-d", tfolder[i], NULL};
-                    execv("/usr/bin/unzip", argv2);
-                    exit(0);
+                for(i=0; i<3; i++){
+                    if((child_id3=fork())==0){
+                        char *argv2[] = {"unzip", "-j", tzip[i], "-d", tfolder[i], NULL};
+                        execv("/usr/bin/unzip", argv2);
+                    }
+                    
                 }
-                //sleep(2);
+                for(i=0; i<3; i++){
+                    waitpid(-1, NULL, 0);
+                }
+                
             }
-            while((wpid3==wait(&status3))>0);
-            
             entered = 1;
-
         }
 
         else if(tmp.tm_mday == day && tmp.tm_mon+1 == month && tmp.tm_hour == hour && tmp.tm_min == min && entered2 ==0){
