@@ -1,138 +1,123 @@
-#include <stdlib.h>
 #include <sys/types.h>
-#include <unistd.h>
-#include <wait.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <stdio.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+#include <time.h>
+#include <wait.h>
+#include <unistd.h>
+#include <dirent.h>
 
-int main() {
-    pid_t child_id;
-    int status;
-    char add[] = "/home/meizee/Documents/SISOP/SHIFT 2";
+int main(){
+    
+pid_t pid, sid;        // Variabel untuk menyimpan PID
 
-    child_id = fork();
+    pid = fork();     // Menyimpan PID dari Child Process
 
-    if (child_id < 0) {
-        exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti
+    /* Keluar saat fork gagal
+    * (nilai variabel pid < 0) */
+    if (pid < 0) {
+        exit(EXIT_FAILURE);
     }
 
-    if (child_id == 0) {
-        pid_t child_id;
-        int status2;
-        child_id = fork();
+    /* Keluar saat fork berhasil
+    * (nilai variabel pid adalah PID dari child process) */
+    if (pid > 0) {
+        exit(EXIT_SUCCESS);
+    }
 
-        if(child_id < 0) {
-            exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti)
-        }
+    umask(0);
 
-        if(child_id==0){
-            id_t child_id;
-            int status3;
-            child_id = fork();
+    sid = setsid();
+    if (sid < 0) {
+        exit(EXIT_FAILURE);
+    }
 
-            if(child_id < 0) {
-                exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti)
+    if((chdir("/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1"))<0){
+        exit(EXIT_FAILURE);
+    }
+
+    close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDERR_FILENO);
+    
+    while(1){
+        time_t currTime = time(NULL);
+        int day = 9;
+        int month = 4;
+        int hour = 22;
+        int min = 22;
+        int entered = 0;
+        int entered2 = 0;
+        struct tm tmp = *localtime(&currTime);
+
+        if(tmp.tm_mday == day && tmp.tm_mon+1 == month && tmp.tm_hour == hour-6 && tmp.tm_min == min && entered == 0){   
+
+            char *folder[3] = {"Pyoto", "Musyik", "Fylm"};
+            char *link[3] = {"https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download", "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download"};
+            char *zip[3] = {"Foto_for_Stevany.zip", "Musik_for_Stevany.zip", "Film_for_Stevany.zip"};
+            char *tzip[3] = {"/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Pyoto.zip", "//home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Musyik.zip", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Fylm.zip"};
+            char *tfolder[3] = {"/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Pyoto", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Musyik", "/home/meizee/Documents/git_env/soal-shift-sisop-modul-2-A07-2021/soal1/Fylm"}; 
+
+            //mkdir
+            pid_t child_id, wpid;
+            int j;
+
+            int status1=0;
+            for(j=0; j<3; j++){
+                
+                if((child_id=fork())==0){
+                    char *argv[] = {"mkdir", folder[j], NULL};
+                    execv("/usr/bin/mkdir", argv);
+                    exit(0);
+                }
             }
 
-            if(child_id==0){
-                id_t child_id;
-                int status4;
-                child_id = fork();
+            while((wpid==wait(&status1))>0);
 
-                if(child_id < 0) {
-                    exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti)
+            pid_t child_id2, wpid2;
+            int k;
+            int status2=0;
+            for(k=0; k<3; k++){
+                
+                if((child_id2=fork())==0){
+                    char *argv[] = {"wget", "-U", "firefox", "-q", "--no-check-certificate", link[k], "-O", zip[k], NULL};
+                    execv("/usr/bin/wget", argv);
+                    exit(0);
                 }
+                
+            }
+            while((wpid2==wait(&status2))>0);
 
-                if (child_id == 0){
-                    pid_t child_id;
-                    int status5;
-                    child_id = fork();
-
-                    if(child_id < 0) {
-                        exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti)
-                    }
-
-                    if(child_id==0){
-                        pid_t child_id;
-                        int status6;
-                        child_id = fork(); 
-
-                        if(child_id < 0) {
-                            exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti)
-                        }
-
-                        if(child_id==0){
-                            pid_t child_id;
-                            int status7;
-                            child_id = fork(); 
-
-                            if(child_id < 0) {
-                                exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti)
-                            }
-
-                            if (child_id == 0){
-                                //foto
-                                char link[1000] = "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download";
-                                char *argv[] = {"/usr/bin/wget", "--no-check-certificate", link, "-O", "Pyoto.zip",NULL};
-                                execv("/usr/bin/wget", argv);
-                            }
-                            else{
-                                while ((wait(&status7)) > 0);
-                                sleep(2);
-                                //musik
-                                char link[1000] = "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download";
-                                char *argv[] = {"/usr/bin/wget", "--no-check-certificate", link, "-O", "Musyik.zip",NULL};
-                                execv("/usr/bin/wget", argv);
-                            }
-                        }
-                        else{
-                            while ((wait(&status6)) > 0);
-                            sleep(2);
-                            //dfilm
-                            char link[1000] = "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download";
-                            char *argv[] = {"/usr/bin/wget", "--no-check-certificate", link, "-O", "Fylm.zip",NULL};
-                            execv("/usr/bin/wget", argv);
-                        }
-                    }
-                    else{
-                        while ((wait(&status5)) > 0);
-                        sleep(2);
-                        char *argv2[] = {"unzip", "-j", "/home/meizee/Documents/SISOP/SHIFT 2/Pyoto.zip", "-d", "/home/meizee/Documents/SISOP/SHIFT 2/Pyoto", NULL};
-                        execv("/usr/bin/unzip", argv2);
-                    }
-                }
-                else{
-                    while ((wait(&status4)) > 0);
-                    sleep(2);
-                    char *argv2[] = {"unzip", "-j", "/home/meizee/Documents/SISOP/SHIFT 2/Musyik.zip", "-d", "/home/meizee/Documents/SISOP/SHIFT 2/Musyik", NULL};
+            //unzip
+            pid_t child_id3, wpid3;
+            int i;
+            int status3=0;
+            for(i=0; i<3; i++){
+                
+                if((child_id3=fork())==0){
+                    char *argv2[] = {"unzip", "-j", tzip[i], "-d", tfolder[i], NULL};
                     execv("/usr/bin/unzip", argv2);
+                    exit(0);
                 }
+                //sleep(2);
             }
-            else{
-                while ((wait(&status3)) > 0);
-                sleep(2);
-                char *argv2[] = {"unzip", "-j", "/home/meizee/Documents/SISOP/SHIFT 2/Fylm.zip", "-d", "/home/meizee/Documents/SISOP/SHIFT 2/Fylm", NULL};
-                execv("/usr/bin/unzip", argv2);
-            }
-        }
-        
-        else {
-        // this is parent
-            while ((wait(&status2)) > 0);
-                sleep(2);
-                //remove all zip
-                char *argv2[] = {"/bin/rm", "Pyoto.zip", "Musyik.zip", "Fylm.zip", NULL};
-                execv("/usr/bin/rm", argv2);
-        }
-    }
+            while((wpid3==wait(&status3))>0);
+            
+            entered = 1;
 
-    else {
-    // this is parent
-        while ((wait(&status)) > 0);
+        }
+
+        else if(tmp.tm_mday == day && tmp.tm_mon+1 == month && tmp.tm_hour == hour && tmp.tm_min == min && entered2 ==0){
+            char *argv2[] = {"/bin/zip", "-rm", "Lopyu_Stevany.zip", "Pyoto", "Musyik", "Fylm", NULL};
+            execv("/usr/bin/zip", argv2);
+            entered2 = 1;
+        }
         sleep(2);
-        //zip semua
-        char *argv2[] = {"/bin/zip", "-rm", "/home/meizee/Documents/SISOP/SHIFT 2/Lopyu_Stevany.zip", "Pyoto", "Musyik", "Fylm", NULL};
-        execv("/usr/bin/zip", argv2);
     }
+    
 }
