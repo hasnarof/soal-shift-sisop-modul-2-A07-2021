@@ -15,9 +15,27 @@
 #include <dirent.h>
 #include <pthread.h>
 #include <limits.h>
-
-void unzip(char *file){
-char *full_path;
+void ardu(char command[], char *arg[]){
+	int status;
+	pid_t pid;
+	pid = fork();
+	if(pid == 0){
+		execv(command, arg);
+	}
+	else{
+		((wait(&status))>0);
+	}
+}
+int main(int argc,char* argv[]){
+    pid_t cid1,cid2;
+    int status1,status2,status;
+    cid1=fork();
+    if(cid1==0){
+   char *argv[]={"unzip", "-q","/home/ghifari/modul2/petshop/pets.zip", NULL};
+   ardu("/usr/bin/unzip", argv);
+    }
+    while((wait(&status))>0);;
+    char *full_path;
     DIR *dir;
     struct dirent *entry;
     int r=-1;
@@ -69,20 +87,27 @@ char *full_path;
         }
         closedir(dir);
         }
-}
- 
-
-int main(int argc,char* argv[]){
-    pid_t cid1,cid2;
-    int status;
-    cid1=fork();
-    if(cid1<0){exit(EXIT_FAILURE);}
-    if(cid1==0){
-   char *argv[]={"unzip", "-q","/home/ghifari/modul2/petshop/pets.zip", NULL};
-   execv("/usr/bin/unzip", argv);
- } 
-    sleep(5);
-    char file[] = "/home/ghifari/modul2/petshop";
-    unzip(file);
-    sleep(5);
+      while(wait(&status1) > 0);;
+    DIR *diir;
+    struct dirent *eentry;
+    diir=opendir("/home/ghifari/modul2/petshop");
+        if (diir){
+        while ((eentry=readdir(diir))!=NULL){
+            char file[100]="";
+            strcpy(file,"/home/ghifari/modul2/petshop/");
+            strcat(file,eentry->d_name);
+              if (strcmp(eentry->d_name, ".") != 0 && strcmp(eentry->d_name, "..") != 0)
+        {
+            if(strstr(file, ".jpg")){
+            strtok(file,";");
+                char *argv[]={"mkdir","-p",file,NULL};
+                ardu("/bin/mkdir",argv);
+        }
+        }
+        
+        }
+        closedir(diir);
+        }
+        while(wait(&status2) > 0);
+    
 }
