@@ -1,6 +1,6 @@
-#Soal Shift Sistem Operasi Modul 2 A07 2021
+# soal-shift-sisop-modul-2-A07-2021
 
-Kelompok A07
+Soal Shift Modul 2 |  Sistem Operasi 2021
 
 1. Zahra Dyah Meilani 05111940000069
 2. Ghifari Astaudi' Ukmullah 05111940000012
