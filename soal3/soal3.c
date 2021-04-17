@@ -17,7 +17,7 @@ void killer(char mode[])
 
     if (strcmp(mode, "-z") == 0)
     {
-        fprintf(fp, "#!/bin/bash\nkill -9 -%d", getpid());
+        fprintf(fp, "#!/bin/bash\nkillall soal3");
     }
     else if (strcmp(mode, "-x") == 0)
     {
