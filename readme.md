@@ -104,9 +104,6 @@ for(j=0; j<3; j++){
 }
 ````
 
-Screenshot:
-![1a]()
-
 ### **b. Men-download File ZIP**
 
 >"Untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga :)."
@@ -136,7 +133,7 @@ for(k=0; k<3; k++){
 ```
 
 Screenshot:
-![1b]()
+![1ab](Screenshot/ss%20soal1/1ab.png)
 
 ### **c dan d. Ekstrak ZIP dan Memindahkannya**
 
@@ -167,7 +164,14 @@ for(i=0; i<3; i++){
 ```
 
 Screenshot:
-![1cd]()
+![1cd](Screenshot/ss%20soal1/1cd.png)
+
+Isi dari folder-folder:
+> [Pyoto](Screenshot/ss%20soal1/isi%20pyoto.png)
+
+> [Musyik](Screenshot/ss%20soal1/isi%20pyoto.png)
+
+> [Fylm](Screenshot/ss%20soal1/isi%20fylm.png)
 
 ### **Proses Kondisi 2:**
 ### **e. dan f. Otomatisasi Program dan ZIP Semua Folder**
@@ -185,18 +189,26 @@ else if(tmp.tm_mday == day && tmp.tm_mon+1 == month && tmp.tm_hour == hour && tm
 ```
 
 Screenshot:
-![1f]()
+![1f](Screenshot/ss%20soal1/1ef%20(2).png)
+
+Isi ZIP:
+![isizip](Screenshot/ss%20soal1/isi%20lopyu%20stevany.png)
 
 
 ### **Kendala**
-- Sempat mengalami error tidak bisa mendownload file dengan wget. Di awal berpikir jika codingan salah, ternyata codingan tidak salah, tetapi memang perintah download ditolak oleh server, setelah dicoba langsung di terminal menggunakan command wget tersebut juga tidak bisa mendownload karena Forbidden 403. Akhirnya saya mencari cara mengatasinya yaitu dengan menambahkan argumen `"-U", "firefox"`.
+- Sempat mengalami error tidak bisa mendownload file dengan wget. Di awal berpikir jika codingan salah, ternyata codingan tidak salah, tetapi memang sepertinya perintah download ditolak oleh server, setelah dicoba langsung di terminal menggunakan command wget tersebut juga tidak bisa mendownload karena ERROR 403: Forbidden. Akhirnya saya mencari cara mengatasinya yaitu dengan menambahkan argumen `"-U", "firefox"`.
   
-  ![error]()
+  ![error](Screenshot/ss%20soal1/error%20(2).jpeg)
 
 - Sempat error karena lupa belum memberi fungsi `waitpid` supaya parent process menunggu semua child process selesai.
+  
+- Date di Linux tidak mau berubah, ternyata butuh konfigurasi di OS Host (Windows) sebelum mengubah date di Virtual Machine dengan `sudo date --set`.
 
 ### **Referensi**
+- https://www.tutorialspoint.com/c_standard_library/c_function_localtime.htm
 - https://stackoverflow.com/questions/23204128/waiting-for-all-children-with-waitpid-option-wall
 - https://stackoverflow.com/questions/19461744/how-to-make-parent-wait-for-all-child-processes-to-finish
 - https://www.linuxquestions.org/questions/linux-software-2/wget-error-403-can-i-get-around-this-606755/
 - https://unix.stackexchange.com/questions/72838/unzip-file-contents-but-without-creating-archive-folder
+- https://www.unix.com/shell-programming-and-scripting/169967-zip-files-deleting-originals.html
+- https://askubuntu.com/questions/35566/how-do-i-manually-set-the-system-time-in-virtualbox/331871#331871
