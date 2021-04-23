@@ -194,7 +194,121 @@ Screenshot:
 Isi ZIP:
 ![isizip](Screenshot/ss%20soal1/isi%20lopyu%20stevany.png)
 
+### Soal No.2
+Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.
 
+Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.
+
+
+Jawab:
+Pada persoalan nomer 2a, diminta untuk mengunzip file pets.zip, untuk menjawab persoalan ini menggunakan ```fork x exec``` dengan menggunakan fungsi ardu sebagai berikut
+```
+void ardu(char command[], char *arg[]){
+	int status;
+	pid_t pid;
+	pid = fork();
+	if(pid == 0){
+		execv(command, arg);
+	}
+	else{
+		((wait(&status))>0);
+	}
+}
+```
+Fungsi ardu ini digunakan untuk memanggil  ```fork x exec ``` berkali-kali. Selanjutnya, untuk mengunzipnya sebagai berikut:
+```
+  char *argv[]={"unzip", "-q","/home/ghifari/modul2/petshop/pets.zip","-d", "/home/ghifari/modul2/petshop", NULL};
+   ardu("/usr/bin/unzip", argv);
+```
+Karena terdapat folder yang tidak penting maka kita harus menghapus folder tersebut, maka harus bisa membedakan yang mana file dan folder. Sebelum itu, digunakan fungsi wait() untuk menunggu proses unzipnya benar-benar selesai. 
+```while((wait(&status))>0);;
+    char *full_path;
+    DIR *dir;
+    struct dirent *entry;
+    int r=-1;
+     size_t path_len = strlen("/home/ghifari/modul2/petshop");
+    dir=opendir("/home/ghifari/modul2/petshop");
+        if (dir){
+      struct dirent *p;
+      r = 0;
+      while (!r && (p=readdir(dir))) {
+            int r2 = -1;
+            char *buf;
+            size_t len;
+
+            
+            if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, ".."))
+                continue;
+
+            len = path_len + strlen(p->d_name) + 2; 
+            buf = malloc(len);
+
+            if (buf) {
+             struct stat statbuf;
+
+                snprintf(buf, len, "%s", p->d_name);
+                if (!stat(buf, &statbuf)) {
+                    if (S_ISDIR(statbuf.st_mode)){
+                        
+                        DIR *subdir;
+                        struct dirent *sub;
+                        subdir=opendir(buf);
+                            while((sub=readdir(subdir))){
+                            char aku[100];
+                            memset(aku,0,sizeof(aku));
+                            strcpy(aku,buf);
+                            strcat(aku, "/");
+                            strcat (aku, sub->d_name);
+                            remove(aku);
+                    }
+                    closedir(subdir);
+                    r2 = rmdir(buf);
+
+                }
+                    else
+                        continue;
+             }
+             free(buf);
+            }
+            
+        }
+        closedir(dir);
+        }
+```
+## Penjelasan souce code diatas
+Pertama yang dilakukan adalah membuka directory yang akan di tuju yaitu  “/home/[user]/modul2/petshop”, kemudian menggunakan ```struct stat``` untuk mengetahui tentang file atau folder, untuk melacak folder maka menggunakan ```(S_ISDIR(statbuf.st_mode))```, setelah itu inisiasi sub foldernya dan buka sub folder tersebut. Kemudian, kita hapus menggunakan fungsi remove(), dan tutup sub directorynya menggunakan fungsi closedir, karena file di sub directory kosong maka kita dapat menghapus folder menggunakan fungsi rmdir(), dan menutup directorynya.
+
+b. Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus membuat folder untuk setiap jenis peliharaan yang ada dalam zip. Karena kamu tidak mungkin memeriksa satu-persatu, maka program harus membuatkan folder-folder yang dibutuhkan sesuai dengan isi zip.
+
+```
+ while(wait(&status1) > 0);;
+    DIR *diir;
+    struct dirent *eentry;
+    diir=opendir("/home/ghifari/modul2/petshop");
+        if (diir){
+        while ((eentry=readdir(diir))!=NULL){
+            char file[100]="";
+            strcpy(file,"/home/ghifari/modul2/petshop/");
+            strcat(file,eentry->d_name);
+              if (strcmp(eentry->d_name, ".") != 0 && strcmp(eentry->d_name, "..") != 0)
+        {
+            if(strstr(file, ".jpg")){
+            strtok(file,";");
+                char *argv[]={"mkdir","-p",file,NULL};
+                ardu("/bin/mkdir",argv);
+        }
+        }
+        
+        }
+        closedir(diir);
+        }
+```
+### Penjelasan source codenya
+Pertama yang dilakukan adalah menunggu proses menghapus folder sampai selesai menggunakan fungsi wait, kemudian membuka directory yang akan di tuju yaitu  “/home/[user]/modul2/petshop”, kemudian mencari file yang hanya ```.jpg``` menggunakan strstr(), kemudian menggunakan strstok() unutk membagi string menjadi beberapa bagian yang dibatasi oleh karakter ";", sehingga didapatkan string yang berisi nama2 hewan, string tersebut akan dibuatkan folder dengan menggunakan fungsi ardu untuk memanggil fork x exec dan menggunakan mkdir, kemudian menutup directorynya.
+
+c. Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan.
+d. Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. 
+e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
 ### **Kendala**
 - Sempat mengalami error tidak bisa mendownload file dengan wget. Di awal berpikir jika codingan salah, ternyata codingan tidak salah, tetapi memang sepertinya perintah download ditolak oleh server, setelah dicoba langsung di terminal menggunakan command wget tersebut juga tidak bisa mendownload karena ERROR 403: Forbidden. Akhirnya saya mencari cara mengatasinya yaitu dengan menambahkan argumen `"-U", "firefox"`.
   
