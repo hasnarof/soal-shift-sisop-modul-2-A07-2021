@@ -194,7 +194,25 @@ Screenshot:
 Isi ZIP:
 ![isizip](Screenshot/ss%20soal1/isi%20lopyu%20stevany.png)
 
-### Soal No.2
+### **Kendala**
+- Sempat mengalami error tidak bisa mendownload file dengan wget. Di awal berpikir jika codingan salah, ternyata codingan tidak salah, tetapi memang sepertinya perintah download ditolak oleh server, setelah dicoba langsung di terminal menggunakan command wget tersebut juga tidak bisa mendownload karena ERROR 403: Forbidden. Akhirnya saya mencari cara mengatasinya yaitu dengan menambahkan argumen `"-U", "firefox"`.
+  
+  ![error](Screenshot/ss%20soal1/error%20(2).jpeg)
+
+- Sempat error karena lupa belum memberi fungsi `waitpid` supaya parent process menunggu semua child process selesai.
+  
+- Date di Linux tidak mau berubah, ternyata butuh konfigurasi di OS Host (Windows) sebelum mengubah date di Virtual Machine dengan `sudo date --set`.
+
+### **Referensi**
+- https://www.tutorialspoint.com/c_standard_library/c_function_localtime.htm
+- https://stackoverflow.com/questions/23204128/waiting-for-all-children-with-waitpid-option-wall
+- https://stackoverflow.com/questions/19461744/how-to-make-parent-wait-for-all-child-processes-to-finish
+- https://www.linuxquestions.org/questions/linux-software-2/wget-error-403-can-i-get-around-this-606755/
+- https://unix.stackexchange.com/questions/72838/unzip-file-contents-but-without-creating-archive-folder
+- https://www.unix.com/shell-programming-and-scripting/169967-zip-files-deleting-originals.html
+- https://askubuntu.com/questions/35566/how-do-i-manually-set-the-system-time-in-virtualbox/331871#331871
+
+## Soal No.2
 Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.
 
 Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.
@@ -309,20 +327,4 @@ Pertama yang dilakukan adalah menunggu proses menghapus folder sampai selesai me
 c. Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan.
 d. Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. 
 e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
-### **Kendala**
-- Sempat mengalami error tidak bisa mendownload file dengan wget. Di awal berpikir jika codingan salah, ternyata codingan tidak salah, tetapi memang sepertinya perintah download ditolak oleh server, setelah dicoba langsung di terminal menggunakan command wget tersebut juga tidak bisa mendownload karena ERROR 403: Forbidden. Akhirnya saya mencari cara mengatasinya yaitu dengan menambahkan argumen `"-U", "firefox"`.
-  
-  ![error](Screenshot/ss%20soal1/error%20(2).jpeg)
 
-- Sempat error karena lupa belum memberi fungsi `waitpid` supaya parent process menunggu semua child process selesai.
-  
-- Date di Linux tidak mau berubah, ternyata butuh konfigurasi di OS Host (Windows) sebelum mengubah date di Virtual Machine dengan `sudo date --set`.
-
-### **Referensi**
-- https://www.tutorialspoint.com/c_standard_library/c_function_localtime.htm
-- https://stackoverflow.com/questions/23204128/waiting-for-all-children-with-waitpid-option-wall
-- https://stackoverflow.com/questions/19461744/how-to-make-parent-wait-for-all-child-processes-to-finish
-- https://www.linuxquestions.org/questions/linux-software-2/wget-error-403-can-i-get-around-this-606755/
-- https://unix.stackexchange.com/questions/72838/unzip-file-contents-but-without-creating-archive-folder
-- https://www.unix.com/shell-programming-and-scripting/169967-zip-files-deleting-originals.html
-- https://askubuntu.com/questions/35566/how-do-i-manually-set-the-system-time-in-virtualbox/331871#331871
