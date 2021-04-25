@@ -212,10 +212,11 @@ Isi ZIP:
 - https://www.unix.com/shell-programming-and-scripting/169967-zip-files-deleting-originals.html
 - https://askubuntu.com/questions/35566/how-do-i-manually-set-the-system-time-in-virtualbox/331871#331871
 
-## Soal No.2
+## **2. Soal No.2**
 Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.
 
-a. Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.
+### **a.** 
+Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.
 
 
 Jawab:
@@ -293,10 +294,12 @@ Karena terdapat folder yang tidak penting maka kita harus menghapus folder terse
         closedir(dir);
         }
 ```
-# Penjelasan souce code diatas
+### Penjelasan souce code diatas
+
 Pertama yang dilakukan adalah membuka directory yang akan di tuju yaitu  “/home/[user]/modul2/petshop”, kemudian menggunakan ```struct stat``` untuk mengetahui tentang file atau folder, untuk melacak folder maka menggunakan ```(S_ISDIR(statbuf.st_mode))```, setelah itu inisiasi sub foldernya dan buka sub folder tersebut. Kemudian, kita hapus menggunakan fungsi remove(), dan tutup sub directorynya menggunakan fungsi closedir, karena file di sub directory kosong maka kita dapat menghapus folder menggunakan fungsi rmdir(), dan menutup directorynya.
 
-b. Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus membuat folder untuk setiap jenis peliharaan yang ada dalam zip. Karena kamu tidak mungkin memeriksa satu-persatu, maka program harus membuatkan folder-folder yang dibutuhkan sesuai dengan isi zip.
+### **b.** 
+Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus membuat folder untuk setiap jenis peliharaan yang ada dalam zip. Karena kamu tidak mungkin memeriksa satu-persatu, maka program harus membuatkan folder-folder yang dibutuhkan sesuai dengan isi zip.
 
 ```
  while(wait(&status1) > 0);;
@@ -321,10 +324,11 @@ b. Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus 
         closedir(diir);
         }
 ```
-# Penjelasan source codenya
+### Penjelasan source codenya
 Pertama yang dilakukan adalah menunggu proses menghapus folder sampai selesai menggunakan fungsi wait, kemudian membuka directory yang akan di tuju yaitu  “/home/[user]/modul2/petshop”, kemudian mencari file yang hanya ```.jpg``` menggunakan strstr(), kemudian menggunakan strstok() unutk membagi string menjadi beberapa bagian yang dibatasi oleh karakter ";", sehingga didapatkan string yang berisi nama2 hewan, string tersebut akan dibuatkan folder dengan menggunakan fungsi ardu untuk memanggil fork x exec dan menggunakan mkdir, kemudian menutup directorynya.
 
-c. Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan.
+### **c.** 
+Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan.
         while(wait(&status2) > 0);
 ```       
         DIR *diiir;
@@ -376,10 +380,11 @@ c. Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke f
                         ardu("/bin/cp", arg);
 			...
 ``` 
-# Penjelasan Source code
+### Penjelasan Source code
 Untuk menjawab soal nomer c ini, pertama program akan membuka directory ``` “/home/[user]/modul2/petshop”```, kemudian mengcopy nama string file atau foleder menggunakan ``` strcpy(file2,eeentry->d_name)```, selanjutnya adalah mencari file2 dengan format ``` jpg```  dan bukan ``` _ ``` menggunakan strstr.  Lalu, membagi filenya ke dalam beberapa string secara manual dengan menggunakan strtok,strcat dan strcpy sampai selesai, untuk pembagian string ini terdiri atas jenis hewan, nama hewan, dan umur. Selanjutnya, file akan di copy ke folder jenis hewan, dengan format namahewan.jpg
 
-d. Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. 
+### **d.** 
+Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. 
      while(wait(&status) > 0);
                
 ```        ...             
@@ -459,13 +464,12 @@ d. Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto har
 }
 }
 ```
-# Penjelasan Program
+### Penjelasan Program
 Setelah menjalankan program no c, selanjutnya program akan mencari mencari file2 dengan format ``` jpg```  dan ``` _ ``` menggunakan strstr, Lalu, membagi filenya ke dalam beberapa string secara manual dengan menggunakan strtok,strcat dan strcpy, untuk pembagian string ini terdiri atas jenis hewan, nama hewan, dan umur, jenis hewan2, nama2, dan umur2. Selanjutnya, file akan di copy ke folder jenis hewan1 dan jenis hewam2, dengan format namahewan1.jpg dan namahewan2.jpg
 
-
-
-e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
-## 1
+### **e.** 
+Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
+#### 1
 ```		...
 		if(strstr(file2,".jpg") && !(strstr(file2,"_"))){
 		...
@@ -477,7 +481,7 @@ e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan um
                 fclose(angel);
 		...
 ```
-# 2
+#### 2
 ```
 		...
 		if(strstr(file2,".jpg") && (strstr(file2,"_"))){
@@ -496,19 +500,19 @@ e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan um
                 fprintf(terangkanlah, "umur : %s tahun\n\n", setting5);
                 fclose(terangkanlah);
 ```
-# Penjelasan Program
+### Penjelasan Program
 
 Untuk program diatas, pertama membuat keterangan.txt di folder hewan, kemudian membuka keterangan.txt sekaligus menambahkan keterangan berupa nama dan umurnya dengan fungsi ```fopen(const char *filename,a+)``` dan  ```fprintf() ``` untuk menambahkan keterangan. Untuk program pertama, untuk file yang tanpa char ``` _``` 
 dan program kedua file yang tanpa char ``` _``` maka dibutuhkan dua kali inisiasi untuk jenis hewan yang berbeda.
 
-# Kendala
+### **Kendala**
 Program c harus berada di file petshop, kemudian tidak dapat menghapus file ``.jpg`` karena program c berada di file tersebut dengan error segmentation fault core dumped.
 
-### Referensi
+### **Referensi**
 - https://stackoverflow.com/questions/2256945/removing-a-non-empty-directory-programmatically-in-c-or-c
 - https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
 
-## **Soal No 3: Pekerjaan Magang Ranora**
+## **3. Pekerjaan Magang Ranora**
 
 > Source Code  **[soal3.c](https://github.com/hasnarof/soal-shift-sisop-modul-2-A07-2021/blob/main/soal3/soal3.c)**
 ```c
@@ -725,10 +729,10 @@ Ini adalah fungsi killer yang cara memanggilnya seperti berikut (line 95).
 killer(argv[1]);
 ```
 Jadi misal ketika menjalankan hasil compile-an program dengan argumen `-z` maka akan membuat script shell `killall soal3` yang artinya memberhentikan semua proses dari compile soal3, jika argumennya `-x` akan membuat script shell `kill < pid >` , yaitu pid yang sekarang, sehingga dapat melanjutkan proses parent nya (melanjutkan proses sampai selesai zip dan menghapus direktori). `fprintf(fp,  "\nrm $0\n");`agar setelah menjalankan bash, shell script akan terhapus sendiri.
-### Kendala
+### **Kendala**
 - saat zip mengalami kendala tidak bisa zip. Ternyata typo code `execv("/user/bin/zip", argv);`
 - saat wget mengalami kendala tidak dapat mendownload dengan pixel yang diinginkan. Setelah dicoba-coba, sepertinya masalahnya ada di argumen yang memakai variabel `now_folder` yang telah berubah value nya. Jadi diakali dengan `chdir` saja.
-### Screenshot
+### **Screenshot**
 #### 3a
 ![3a](Screenshot/ss-soal-3/3a.png)
 #### 3b
