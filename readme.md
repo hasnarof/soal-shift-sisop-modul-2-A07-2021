@@ -654,7 +654,7 @@ Program c harus berada di file petshop, kemudian tidak dapat menghapus file ``.j
 - https://stackoverflow.com/questions/2256945/removing-a-non-empty-directory-programmatically-in-c-or-c
 - https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
 
-## **3. Pekerjaan Magang Ranora**
+## **Soal No 3: Pekerjaan Magang Ranora**
 
 > Source Code  **[soal3.c](https://github.com/hasnarof/soal-shift-sisop-modul-2-A07-2021/blob/main/soal3/soal3.c)**
 ```c
@@ -885,4 +885,3 @@ Jadi misal ketika menjalankan hasil compile-an program dengan argumen `-z` maka 
 ![3d](Screenshot/ss-soal-3/3d.png)
 #### 3e
 ![3e](Screenshot/ss-soal-3/3e.png)
->>>>>>> readme soal3
