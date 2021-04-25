@@ -643,6 +643,7 @@ e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan um
                 fclose(terangkanlah);
 ```
 ### Penjelasan Program
+<<<<<<< HEAD
 Untuk program diatas, pertama membuat keterangan.txt di folder hewan, kemudian membuka keterangan.txt sekaligus menambahkan keterangan berupa nama dan umurnya dengan fungsi ```fopen(const char *filename,a+)``` dan  ```fprintf() ``` untuk menambahkan keterangan. Untuk program pertama, untuk file yang tanpa char ``` _``` 
 dan program kedua file yang tanpa char ``` _``` maka dibutuhkan dua kali inisiasi untuk jenis hewan yang berbeda.
 
@@ -652,3 +653,236 @@ Program c harus berada di file petshop, kemudian tidak dapat menghapus file ``.j
 ### Referensi
 - https://stackoverflow.com/questions/2256945/removing-a-non-empty-directory-programmatically-in-c-or-c
 - https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
+
+## **3. Pekerjaan Magang Ranora**
+
+> Source Code  **[soal3.c](https://github.com/hasnarof/soal-shift-sisop-modul-2-A07-2021/blob/main/soal3/soal3.c)**
+```c
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+
+int main() {
+  pid_t pid, sid;        // Variabel untuk menyimpan PID
+
+  pid = fork();     // Menyimpan PID dari Child Process
+
+  /* Keluar saat fork gagal
+  * (nilai variabel pid < 0) */
+  if (pid < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  /* Keluar saat fork berhasil
+  * (nilai variabel pid adalah PID dari child process) */
+  if (pid > 0) {
+    exit(EXIT_SUCCESS);
+  }
+
+  umask(0);
+
+  sid = setsid();
+  if (sid < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  if ((chdir("/")) < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  close(STDIN_FILENO);
+  close(STDOUT_FILENO);
+  close(STDERR_FILENO);
+
+  while (1) {
+    // Tulis program kalian di sini
+
+    sleep(30);
+  }
+}
+```
+Code di atas adalah langkah-langkah untuk membuat daemon.
+```c
+		pid_t child_id;
+        int status;
+
+        char path[] = "/home/hasna/sisop/praktikum2/";
+        char rootPath[100];
+        strcpy(rootPath, path);
+
+        time_t rawtime = time(NULL);
+        struct tm *tm_time = localtime(&rawtime);
+```
+Pertama, kita ingin membuat folder dengan nama folder adalah timestamp. Fungsi `time()` mereturn banyak waktu sejak 00:00:00 UTC, January 1, 1970 (Unix timestamp) dalam detik dan disimpan pada `rawtime`. Kemudian, kita format waktu `rawtime` menjadi jam lokal yang biasa kita lihat dengan fungsi `localtime()`. `struct tm` ini memudahkan kita untuk memformat jam sesuai keinginan kita.
+```c        
+        char now_folder[80];
+        char now_folder_fix[80];
+
+        // YYYY-mm-dd_HH:ii:ss].
+        strftime(now_folder, 80, "%Y-%m-%d_%H:%M:%S", tm_time);
+        strcpy(now_folder_fix, now_folder);
+
+        strcat(path, now_folder); // path = ~/sisop/praktikum2/YYYY-MM-DD_HH:MM:SS
+
+        child_id = fork();
+
+        if (child_id < 0)
+        {
+            exit(EXIT_FAILURE); // Jika gagal membuat proses baru, program akan berhenti
+        }
+
+        if (child_id == 0)
+        {
+            if (fork() == 0)
+            {
+                char *argv[] = {"mkdir", path, NULL};
+                execv("/bin/mkdir", argv);
+            }
+```
+Kemudian, kita taruh hasil timestamp pada string `now_folder`. Sehingga nama folder adalah timestamp. Kemudian, gabungkan string `now_folder` ke string `path`. String `path` ini untuk membuat folder dengan dengan **mkdir**.
+
+Tambahan: `now_folder_fix` ini akan dipakai nanti, karena `now_folder` nilainya sudah berubah setelah `strcat` ke `path`.
+
+Kemudian kita membuat **child process**. Karena child berjalan duluan, maka child kita gunakan untuk mengeksekusi `mkdir`. Bisa dilihat di sini kita `fork()` dua kali karena kita butuh beberapa cabang untuk melaksanakan beberapa eksekusi **execv** (sehabis `execv`, process akan selesai, oleh karena itu membutuhkan child untuk program tetap berjalan sesuai keinginan kita). Proses child ditandai jika hasil return `fork()` adalah 0.
+```c
+            else
+            {
+                while ((wait(&status)) > 0)
+                    ;
+```
+`while  ((wait(&status))  >  0)` agar proses mendownload gambar tidak berjalan duluan sebelum membuat direktori.
+```c
+                int count = 10;
+                while (count)
+                {
+                    if (fork() == 0)
+                    {
+
+                        rawtime = time(NULL);
+                        tm_time = localtime(&rawtime);
+                        char now_pict[80];
+
+                        // YYYY-mm-dd_HH:ii:ss].
+                        strftime(now_pict, 80, "%Y-%m-%d_%H:%M:%S", tm_time);
+```
+Kemudian kita mendownload 10 gambar untuk setiap 1 direktori. Buat waktu lagi seperti cara sebelumnya untuk nama file gambar.
+```c
+                        char downloadLink[200];
+
+                        sprintf(downloadLink, "https://picsum.photos/%ld", ((rawtime % 1000) + 100));
+```
+Taruh link download pada `downloadLink`. Tambah juga `((rawtime % 1000) + 100))` pada `downloadLink` karena kita ingin mendownload gambar dengan ukuran sebesar `((rawtime % 1000) + 100))` pixel. rawtime adalah banyak waktu dalam Unix timestamp.
+```c
+                        chdir(path);
+                        char *argv[] = {"wget", "-qO", now_pict, downloadLink, NULL};
+                        execv("/usr/bin/wget", argv);
+                    }
+                    count--;
+                    sleep(5);
+                }
+```
+
+Kemudian `execv` `wget`. Argumen `-q0` untuk menamai hasil downloadan dengan nama `now_pict`. `sleep(5)` untuk agar mendownload setiap 5 detik.
+
+```c
+
+                chdir(path);
+                FILE *fp1 = fopen("status.txt", "w");
+                char message[] = "Download Success";
+                cipher(message, 5);
+                fprintf(fp1, "%s", message);
+                fclose(fp1);
+
+                chdir(rootPath);
+                char *argv[] = {"zip", "-rm", now_folder_fix, now_folder_fix, NULL};
+                execv("/usr/bin/zip", argv);
+            }
+```
+Setelah download gambar, **chdir** ke folder direktori yang berisi 10 gambar itu, dan buat status.txt berisi "Download Success" yang sudah dienkripsi memakai fungsi `cipher`. Kemudian, eksekusi `execv zip`.
+```c
+        }
+        else
+        {
+            sleep(40);
+        }
+```
+`sleep(40)` untuk membuat direktori setiap 40 detik.
+```c
+void cipher(char text[], int key)
+{
+    char letter;
+    for (int i = 0; text[i] != '\0'; ++i)
+    {
+        letter = text[i];
+
+        if (letter >= 'A' && letter <= 'Z')
+        {
+            letter = letter + key;
+
+            if (letter > 'Z')
+            {
+                letter = letter - 'Z' + 'A' - 1;
+            }
+
+            text[i] = letter;
+        } else if (letter >= 'a' && letter <= 'z')
+        {
+            letter = letter + key;
+
+            if (letter > 'z')
+            {
+                letter = letter - 'z' + 'a' - 1;
+            }
+
+            text[i] = letter;
+        }
+    }
+}
+```
+Ini adalah fungsi untuk mengenkripsi dengan sandi cipher. Setiap huruf digeser sebanyak `key` ke depan. Jika sudah melewati batas Z atau z, balik lagi dari A atau a.
+```c
+void killer(char mode[])
+{
+    FILE *fp;
+    fp = fopen("killer.sh", "w");
+
+    if (strcmp(mode, "-z") == 0)
+    {
+        fprintf(fp, "#!/bin/bash\nkillall soal3");
+    }
+    else if (strcmp(mode, "-x") == 0)
+    {
+        fprintf(fp, "#!/bin/bash\nkill %d", getpid());
+    }
+
+    fprintf(fp, "\nrm $0\n");
+
+    fclose(fp);
+}
+```
+Ini adalah fungsi killer yang cara memanggilnya seperti berikut (line 95).
+```c
+killer(argv[1]);
+```
+Jadi misal ketika menjalankan hasil compile-an program dengan argumen `-z` maka akan membuat script shell `killall soal3` yang artinya memberhentikan semua proses dari compile soal3, jika argumennya `-x` akan membuat script shell `kill < pid >` , yaitu pid yang sekarang, sehingga dapat melanjutkan proses parent nya (melanjutkan proses sampai selesai zip dan menghapus direktori). `fprintf(fp,  "\nrm $0\n");`agar setelah menjalankan bash, shell script akan terhapus sendiri.
+### Kendala
+- saat zip mengalami kendala tidak bisa zip. Ternyata typo code `execv("/user/bin/zip", argv);`
+- saat wget mengalami kendala tidak dapat mendownload dengan pixel yang diinginkan. Setelah dicoba-coba, sepertinya masalahnya ada di argumen yang memakai variabel `now_folder` yang telah berubah value nya. Jadi diakali dengan `chdir` saja.
+### Screenshot
+#### 3a
+![3a](Screenshot/ss-soal-3/3a.png)
+#### 3b
+![3b](Screenshot/ss-soal-3/3b.png)
+#### 3c
+![3c](Screenshot/ss-soal-3/3c.png)
+#### 3d
+![3d](Screenshot/ss-soal-3/3d.png)
+#### 3e
+![3e](Screenshot/ss-soal-3/3e.png)
+>>>>>>> readme soal3
