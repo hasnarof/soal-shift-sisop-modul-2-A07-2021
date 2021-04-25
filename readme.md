@@ -215,7 +215,7 @@ Isi ZIP:
 ## Soal No.2
 Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.
 
-Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.
+a. Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.
 
 
 Jawab:
@@ -293,7 +293,7 @@ Karena terdapat folder yang tidak penting maka kita harus menghapus folder terse
         closedir(dir);
         }
 ```
-## Penjelasan souce code diatas
+# Penjelasan souce code diatas
 Pertama yang dilakukan adalah membuka directory yang akan di tuju yaitu  “/home/[user]/modul2/petshop”, kemudian menggunakan ```struct stat``` untuk mengetahui tentang file atau folder, untuk melacak folder maka menggunakan ```(S_ISDIR(statbuf.st_mode))```, setelah itu inisiasi sub foldernya dan buka sub folder tersebut. Kemudian, kita hapus menggunakan fungsi remove(), dan tutup sub directorynya menggunakan fungsi closedir, karena file di sub directory kosong maka kita dapat menghapus folder menggunakan fungsi rmdir(), dan menutup directorynya.
 
 b. Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus membuat folder untuk setiap jenis peliharaan yang ada dalam zip. Karena kamu tidak mungkin memeriksa satu-persatu, maka program harus membuatkan folder-folder yang dibutuhkan sesuai dengan isi zip.
@@ -321,7 +321,7 @@ b. Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus 
         closedir(diir);
         }
 ```
-### Penjelasan source codenya
+# Penjelasan source codenya
 Pertama yang dilakukan adalah menunggu proses menghapus folder sampai selesai menggunakan fungsi wait, kemudian membuka directory yang akan di tuju yaitu  “/home/[user]/modul2/petshop”, kemudian mencari file yang hanya ```.jpg``` menggunakan strstr(), kemudian menggunakan strstok() unutk membagi string menjadi beberapa bagian yang dibatasi oleh karakter ";", sehingga didapatkan string yang berisi nama2 hewan, string tersebut akan dibuatkan folder dengan menggunakan fungsi ardu untuk memanggil fork x exec dan menggunakan mkdir, kemudian menutup directorynya.
 
 c. Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan.
@@ -376,7 +376,7 @@ c. Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke f
                         ardu("/bin/cp", arg);
 			...
 ``` 
-### Penjelasan Source code
+# Penjelasan Source code
 Untuk menjawab soal nomer c ini, pertama program akan membuka directory ``` “/home/[user]/modul2/petshop”```, kemudian mengcopy nama string file atau foleder menggunakan ``` strcpy(file2,eeentry->d_name)```, selanjutnya adalah mencari file2 dengan format ``` jpg```  dan bukan ``` _ ``` menggunakan strstr.  Lalu, membagi filenya ke dalam beberapa string secara manual dengan menggunakan strtok,strcat dan strcpy sampai selesai, untuk pembagian string ini terdiri atas jenis hewan, nama hewan, dan umur. Selanjutnya, file akan di copy ke folder jenis hewan, dengan format namahewan.jpg
 
 d. Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. 
@@ -459,156 +459,10 @@ d. Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto har
 }
 }
 ```
-### Penjelasan Program
+# Penjelasan Program
 Setelah menjalankan program no c, selanjutnya program akan mencari mencari file2 dengan format ``` jpg```  dan ``` _ ``` menggunakan strstr, Lalu, membagi filenya ke dalam beberapa string secara manual dengan menggunakan strtok,strcat dan strcpy, untuk pembagian string ini terdiri atas jenis hewan, nama hewan, dan umur, jenis hewan2, nama2, dan umur2. Selanjutnya, file akan di copy ke folder jenis hewan1 dan jenis hewam2, dengan format namahewan1.jpg dan namahewan2.jpg
 
-e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
-```         	char susah[400];
-                sprintf(susah, "/home/ghifari/modul2/petshop/%s/keterangan.txt", nama);
-                FILE *angel=fopen(susah, "a+");
-                fprintf(angel, "nama : %s\n", settingan);
-                fprintf(angel, "umur : %s tahun\n\n", settingan2);
-                fclose(angel);
-```
-```
-                char terang[300];
-                sprintf(terang, "/home/ghifari/modul2/petshop/%s/keterangan.txt", name);
-                FILE *terangkanlah;
-                terangkanlah = fopen(terang, "a+");
-                fprintf(terangkanlah, "nama : %s\n", setting);
-                fprintf(terangkanlah, "umur : %s tahun\n\n", setting3);
-                fclose(terangkanlah);
-                while(wait(&status2) > 0);
-                sprintf(terang, "/home/ghifari/modul2/petshop/%s/keterangan.txt", setting3);
-                terangkanlah = fopen(terang, "a+");
-                fprintf(terangkanlah, "nama : %s\n", setting4);
-                fprintf(terangkanlah, "umur : %s tahun\n\n", setting5);
-                fclose(terangkanlah);
-```
-                   char nama[100],halu[100],ada[100],settingan[100],halu2[100],ada2[100],settingan2[100],halu3[100],halu4[100],ada3[100],settingan3[100]="";
-                   strcpy(nama,file2);
-                   strtok(nama,";");
-                   int i,ii;
-                   strcpy(halu,nama);
-                   strcat(halu,";");
-                   int ext=strlen(halu);
-                   strcpy(ada,&file2[ext]);
-                   //printf("%s\n",ada);
-                   strcpy(settingan,ada);
-                   strtok(settingan,";");
-                  // printf("%s\n",settingan);
-                   strcpy(halu2,settingan);
-                   strcat(halu2,";");
-                   int ext2=strlen(halu2);
-                    strcpy(ada2,&ada[ext2]);
-                    //printf("%s\n",ada2);
-                    
-                    strcpy(settingan2,ada2);
-                    //strtok(settingan2, "_");
-                    strtok(settingan2, "j");
-                    if (settingan2[strlen(settingan2) - 1] == '.')
-                    {
-                    settingan2[strlen(settingan2) - 1] = '\0';
-                    }
-                    printf("%s\n",settingan2);
-                    while((wait(&status))>0);
 
-                    int status, status2;
-                    
-                    char rekor[400], muri[400],hbd[400],adalah[400];
-                    strcpy(hbd,"/home/ghifari/modul2/petshop/");
-                    strcat(hbd,eeentry->d_name);
-                        sprintf(rekor, "%s", hbd);
-                        sprintf(muri, "/home/ghifari/modul2/petshop/%s/%s.jpg", nama, settingan);
-                        char *arg[] = {"cp", "-r", rekor, muri, NULL};
-                        ardu("/bin/cp", arg);
-			...
-``` 
-### Penjelasan Source code
-Untuk menjawab soal nomer c ini, pertama program akan membuka directory ``` “/home/[user]/modul2/petshop”```, kemudian mengcopy nama string file atau foleder menggunakan ``` strcpy(file2,eeentry->d_name)```, selanjutnya adalah mencari file2 dengan format ``` jpg```  dan bukan ``` _ ``` menggunakan strstr.  Lalu, membagi filenya ke dalam beberapa string secara manual dengan menggunakan strtok,strcat dan strcpy sampai selesai, untuk pembagian string ini terdiri atas jenis hewan, nama hewan, dan umur. Selanjutnya, file akan di copy ke folder jenis hewan, dengan format namahewan.jpg
-
-d. Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. 
-     while(wait(&status) > 0);
-               
-```        ...             
-                     if(strstr(file2,".jpg") && (strstr(file2,"_"))){
-                         char name[100],hantu2[100],really[100],setting[100],hantu5[100],really2[100],setting2[100],hantu3[100],hantu4[100],really3[100],setting4[100]="";
-                         char hantu6[100],hantu7[100];
-                         char setting3[100],setting6[100],setting5[100];
-                         char really4[100],really6[100],really7[100],really5[100];
-                 strcpy(name,file2);
-                   strtok(name,";");
-                   int i,ii;
-                   strcpy(hantu2,name);
-                   strcat(hantu2,";");
-                   int xet=strlen(hantu2);
-                   strcpy(really,&file2[xet]);
-                //   printf("%s\n",really);
-                   strcpy(setting,really);
-                   strtok(setting,";");
-                 //  printf("%s\n",setting);
-                   strcpy(hantu3,setting);
-                   strcat(hantu3,";");
-                   int xet2=strlen(hantu3);
-                    strcpy(really2,&really[xet2]);
-                 //   printf("%s\n",really2);
-                    strcpy(setting2,really2);
-                    strtok(setting2, "_");
-                  //  printf("%s\n",setting2);
-                    strcpy(hantu4,setting2);
-                    strcat(hantu4,"_");
-
-                     int xet3=strlen(hantu4);
-                    strcpy(really3,&really2[xet3]);
-                   // printf("%s\n",really3);
-                     strcpy(setting3,really3);
-                    strtok(setting3, ";");
-                   // printf("%s\n",setting3);
-                    strcpy(hantu5,setting3);
-                    strcat(hantu5,"_");
-
-                    int xet4=strlen(hantu5);
-                    strcpy(really4,&really3[xet4]);
-                   // printf("%s\n",really4);
-                    
-                    strcpy(setting4,really4);
-                    strtok(setting4, ";");
-                    printf("%s\n",setting4);
-                    strcpy(hantu6,setting4);
-                    strcat(hantu6,";");
-                    int xet5=strlen(hantu6);
-                    strcpy(really5,&really4[xet5]);
-                    //printf("%s\n",really5);
-                    
-                   strcpy(setting5,really5);
-                    strtok(setting5, "j");
-                    if (setting5[strlen(setting5) - 1] == '.')
-                    {
-                    setting5[strlen(setting5) - 1] = '\0';
-                    }
-                            
-                   while((wait(&status))>0);
-                    char rekor[400], muri[400],hbd[400],adalah[400],sapi[400],kucing[400];
-                    strcpy(hbd,"/home/ghifari/modul2/petshop/");
-                    strcat(hbd,eeentry->d_name);
-                    sprintf(rekor, "%s", hbd);
-                    sprintf(muri, "/home/ghifari/modul2/petshop/%s/%s.jpg", name, setting);
-                    char *arg[] = {"cp", "-r", rekor, muri, NULL};
-                    ardu("/bin/cp", arg);
-            
-                while(wait(&status2) > 0);
-                    sprintf(sapi, "/home/ghifari/modul2/petshop/%s/%s.jpg", setting3, setting4);
-                    char *argvv[] = {"cp", "-r", rekor, sapi, NULL};
-                    ardu("/bin/cp", argvv);
-		    ...
-           
-           }
-           closedir(diir);
-}
-}
-```
-### Penjelasan Program
-Setelah menjalankan program no c, selanjutnya program akan mencari mencari file2 dengan format ``` jpg```  dan ``` _ ``` menggunakan strstr, Lalu, membagi filenya ke dalam beberapa string secara manual dengan menggunakan strtok,strcat dan strcpy, untuk pembagian string ini terdiri atas jenis hewan, nama hewan, dan umur, jenis hewan2, nama2, dan umur2. Selanjutnya, file akan di copy ke folder jenis hewan1 dan jenis hewam2, dengan format namahewan1.jpg dan namahewan2.jpg
 
 e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
 ## 1
@@ -623,7 +477,7 @@ e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan um
                 fclose(angel);
 		...
 ```
-## 2
+# 2
 ```
 		...
 		if(strstr(file2,".jpg") && (strstr(file2,"_"))){
@@ -642,12 +496,12 @@ e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan um
                 fprintf(terangkanlah, "umur : %s tahun\n\n", setting5);
                 fclose(terangkanlah);
 ```
-### Penjelasan Program
+# Penjelasan Program
 
 Untuk program diatas, pertama membuat keterangan.txt di folder hewan, kemudian membuka keterangan.txt sekaligus menambahkan keterangan berupa nama dan umurnya dengan fungsi ```fopen(const char *filename,a+)``` dan  ```fprintf() ``` untuk menambahkan keterangan. Untuk program pertama, untuk file yang tanpa char ``` _``` 
 dan program kedua file yang tanpa char ``` _``` maka dibutuhkan dua kali inisiasi untuk jenis hewan yang berbeda.
 
-### Kendala
+# Kendala
 Program c harus berada di file petshop, kemudian tidak dapat menghapus file ``.jpg`` karena program c berada di file tersebut dengan error segmentation fault core dumped.
 
 ### Referensi
