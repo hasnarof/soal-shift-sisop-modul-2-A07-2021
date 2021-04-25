@@ -509,15 +509,15 @@ dan program kedua file yang tanpa char ``` _``` maka dibutuhkan dua kali inisias
 Program c harus berada di file petshop, kemudian tidak dapat menghapus file ``.jpg`` karena program c berada di file tersebut dengan error segmentation fault core dumped.
 ### **Screenshot**
 #### 2a
-![2a]![Selection_2a](https://user-images.githubusercontent.com/81076281/115997981-55415f80-a60f-11eb-97da-e2ae5bbd1332.png)
+[Selection_2a](https://user-images.githubusercontent.com/81076281/115997981-55415f80-a60f-11eb-97da-e2ae5bbd1332.png)
 #### 2b
-![2b]! [Selection_2b](https://user-images.githubusercontent.com/81076281/115998067-b9fcba00-a60f-11eb-919b-9a96464758c7.png)
+[Selection_2b](https://user-images.githubusercontent.com/81076281/115998067-b9fcba00-a60f-11eb-919b-9a96464758c7.png)
 
 #### 2c dan 2d
-![2c_2d] ![Selection_2c_2d](https://user-images.githubusercontent.com/81076281/115998171-3bece300-a610-11eb-8459-badd63c624a0.png)
+[Selection_2c_2d](https://user-images.githubusercontent.com/81076281/115998171-3bece300-a610-11eb-8459-badd63c624a0.png)
 
 #### 2e
-![2e][Selection_2e](https://user-images.githubusercontent.com/81076281/115998067-b9fcba00-a60f-11eb-919b-9a96464758c7.png)
+[Selection_2e](https://user-images.githubusercontent.com/81076281/115998067-b9fcba00-a60f-11eb-919b-9a96464758c7.png)
 
 
 ### **Referensi**
