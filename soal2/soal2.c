@@ -245,7 +245,7 @@ int main(){
                 while(wait(&status2) > 0);
                 sprintf(terang, "/home/ghifari/modul2/petshop/%s/keterangan.txt", setting3);
                 terangkanlah = fopen(terang, "a+");
-                fprintf(terangkanlah, "nama : %s\n", setting3);
+                fprintf(terangkanlah, "nama : %s\n", setting4);
                 fprintf(terangkanlah, "umur : %s tahun\n\n", setting5);
                 fclose(terangkanlah);
                   }
