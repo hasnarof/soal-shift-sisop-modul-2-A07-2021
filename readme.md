@@ -643,7 +643,7 @@ e. Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan um
                 fclose(terangkanlah);
 ```
 ### Penjelasan Program
-<<<<<<< HEAD
+
 Untuk program diatas, pertama membuat keterangan.txt di folder hewan, kemudian membuka keterangan.txt sekaligus menambahkan keterangan berupa nama dan umurnya dengan fungsi ```fopen(const char *filename,a+)``` dan  ```fprintf() ``` untuk menambahkan keterangan. Untuk program pertama, untuk file yang tanpa char ``` _``` 
 dan program kedua file yang tanpa char ``` _``` maka dibutuhkan dua kali inisiasi untuk jenis hewan yang berbeda.
 
