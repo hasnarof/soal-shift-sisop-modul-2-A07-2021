@@ -26,14 +26,10 @@ void ardu(char command[], char *arg[]){
 		((wait(&status))>0);
 	}
 }
-int main(int argc,char* argv[]){
-    pid_t cid1,cid2;
+int main(){
     int status1,status2,status;
-    cid1=fork();
-    if(cid1==0){
-   char *argv[]={"unzip", "-q","/home/ghifari/modul2/petshop/pets.zip", NULL};
+   char *argv[]={"unzip", "-q","/home/ghifari/modul2/petshop/pets.zip","-d", "/home/ghifari/modul2/petshop", NULL};
    ardu("/usr/bin/unzip", argv);
-    }
     while((wait(&status))>0);;
     char *full_path;
     DIR *dir;
@@ -149,23 +145,20 @@ int main(int argc,char* argv[]){
                     while((wait(&status))>0);
 
                     int status, status2;
-                    pid_t cid;
-                    cid = fork();
-                    if(cid < 0) exit(0);
-                    if(cid == 0) {
+                    
                     char rekor[400], muri[400],hbd[400],adalah[400];
                     strcpy(hbd,"/home/ghifari/modul2/petshop/");
                     strcat(hbd,eeentry->d_name);
                         sprintf(rekor, "%s", hbd);
                         sprintf(muri, "/home/ghifari/modul2/petshop/%s/%s.jpg", nama, settingan);
                         char *arg[] = {"cp", "-r", rekor, muri, NULL};
-                        execv("/bin/cp", arg);
-            }
+                        ardu("/bin/cp", arg);
+            
                         while(wait(&status) > 0);
                         char susah[400];
                         sprintf(susah, "/home/ghifari/modul2/petshop/%s/keterangan.txt", nama);
                         FILE *angel=fopen(susah, "a+");
-                        fprintf(angel, "nama : %s\n", nama);
+                        fprintf(angel, "nama : %s\n", settingan);
                         fprintf(angel, "umur : %s tahun\n\n", settingan2);
                         fclose(angel);
                }
@@ -227,48 +220,38 @@ int main(int argc,char* argv[]){
                     }
                             
                    while((wait(&status))>0);
-                    pid_t cid;
-                    cid = fork();
-                    if(cid < 0) exit(0);
-                     if(cid == 0) {
-                    char rekor[400], muri[400],hbd[400],adalah[400];
+                    char rekor[400], muri[400],hbd[400],adalah[400],sapi[400],kucing[400];
                     strcpy(hbd,"/home/ghifari/modul2/petshop/");
                     strcat(hbd,eeentry->d_name);
                     sprintf(rekor, "%s", hbd);
                     sprintf(muri, "/home/ghifari/modul2/petshop/%s/%s.jpg", name, setting);
                     char *arg[] = {"cp", "-r", rekor, muri, NULL};
-                    execv("/bin/cp", arg);
-                }
+                    ardu("/bin/cp", arg);
+            
                 while(wait(&status2) > 0);
-                cid = fork();
-                    if(cid < 0) exit(0);
-                     if(cid == 0) {
-                    char rekor[400], muri[400],hbd[400],adalah[400];
-                    strcpy(hbd,"/home/ghifari/modul2/petshop/");
-                    strcat(hbd,eeentry->d_name);
-                    sprintf(rekor, "%s", hbd);
-                    sprintf(muri, "/home/ghifari/modul2/petshop/%s/%s.jpg", setting3, setting4);
-                    char *arg[] = {"cp", "-r", rekor, muri, NULL};
-                    execv("/bin/cp", arg);
-                }
-                
+                    sprintf(sapi, "/home/ghifari/modul2/petshop/%s/%s.jpg", setting3, setting4);
+                    char *argvv[] = {"cp", "-r", rekor, sapi, NULL};
+                    ardu("/bin/cp", argvv);
+       
                 //soal e
                 while(wait(&status2) > 0);
                 char terang[300];
                 sprintf(terang, "/home/ghifari/modul2/petshop/%s/keterangan.txt", name);
                 FILE *terangkanlah;
                 terangkanlah = fopen(terang, "a+");
-                fprintf(terangkanlah, "nama : %s\n", name);
+                fprintf(terangkanlah, "nama : %s\n", setting);
                 fprintf(terangkanlah, "umur : %s tahun\n\n", setting3);
                 fclose(terangkanlah);
                 while(wait(&status2) > 0);
                 sprintf(terang, "/home/ghifari/modul2/petshop/%s/keterangan.txt", setting3);
                 terangkanlah = fopen(terang, "a+");
-                fprintf(terangkanlah, "nama : %s\n", setting3);
+                fprintf(terangkanlah, "nama : %s\n", setting4);
                 fprintf(terangkanlah, "umur : %s tahun\n\n", setting5);
                 fclose(terangkanlah);
                   }
-               }
+         }
+           
            }
-           }
+           closedir(diir);
+}
 }
